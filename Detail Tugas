@@ -1,0 +1,136 @@
+# Sistem Manajemen Perpustakaan
+
+## A. Struktur Data
+
+- **Doubly Linked List**
+- **Queue**
+
+---
+
+## B. Fitur Program
+
+### 1. Tambah Buku
+Input:
+- ID Buku (string)
+- Judul (string)
+- Pengarang (string)
+- Tahun Terbit (int)
+- Kategori (string)
+- Nama Penerbit (string)
+- Ketersediaan (bool)
+
+---
+
+### 2. Hapus Buku
+Input:
+- ID Buku
+
+---
+
+### 3. Cari Buku
+Pencarian berdasarkan:
+- ID Buku
+- Judul
+- Kategori
+- Pengarang
+
+---
+
+### 4. Tampilkan Buku
+Fitur:
+- Menampilkan seluruh daftar buku
+- Sorting berdasarkan judul (Ascending / Descending)
+- Filter buku berdasarkan status:
+  - Tersedia
+  - Tidak Tersedia
+
+---
+
+### 5. Pinjam Buku
+Input:
+- ID Buku
+- Nama Peminjam
+- NIM
+- Tanggal Pinjam
+
+---
+
+### 6. Kembalikan Buku
+Input:
+- ID Buku
+
+---
+
+### 7. Lihat Daftar Tunggu
+Menampilkan:
+- ID Buku
+- Judul Buku
+- Nama Peminjam
+- Sisa waktu peminjaman (berapa hari lagi jatuh tempo)
+
+---
+
+### 8. Keluar
+
+---
+
+#  Pembagian Tugas
+
+## Jani — Struktur Data & Tambah Buku
+### Tanggung Jawab
+- Membuat `struct Buku`
+- Membuat node Doubly Linked List
+- Mengelola pointer `head` dan `tail`
+- Membuat fitur **Tambah Buku**
+
+---
+
+## Tinna — Hapus & Cari Buku
+### Tanggung Jawab
+- Membuat fitur **Hapus Buku** berdasarkan ID
+- Membuat fitur **Cari Buku** berdasarkan:
+  - ID
+  - Judul
+  - Kategori
+  - Pengarang
+- Menangani traversal dan penghapusan node pada Doubly Linked List
+
+---
+
+## Jelli — Tampilkan Buku & Sorting
+### Tanggung Jawab
+- Membuat fitur **Tampilkan Buku**
+- Membuat sorting **Ascending** dan **Descending** berdasarkan judul
+- Membuat filter **Tersedia / Tidak Tersedia**
+- Menampilkan data dalam bentuk tabel yang rapi
+
+---
+
+## Aul — Queue, Peminjaman & Pengembalian
+### Tanggung Jawab
+- Membuat struktur **Queue** untuk daftar tunggu
+- Membuat fitur **Pinjam Buku**
+- Membuat fitur **Kembalikan Buku**
+- Membuat fitur **Lihat Daftar Tunggu**
+- Menghitung dan menampilkan sisa waktu peminjaman (jatuh tempo)
+
+---
+
+#  Tugas Bersama
+
+- Menggabungkan seluruh kode program
+- Membuat menu utama
+- Melakukan pengujian program
+- Menyusun laporan dan slide presentasi
+- Menyiapkan pembagian penjelasan saat presentasi
+
+---
+
+#  Ringkasan Pembagian Tugas
+
+| Anggota | Tugas |
+|---------|-------|
+| Jani | Struct Buku, Node Doubly Linked List, Tambah Buku |
+| Tinna | Hapus Buku, Cari Buku |
+| Jelli | Tampilkan Buku, Sorting, Filter Ketersediaan |
+| Aul | Queue, Pinjam Buku, Kembalikan Buku, Daftar Tunggu |
