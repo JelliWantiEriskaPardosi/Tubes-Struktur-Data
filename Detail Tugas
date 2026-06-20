@@ -1,18 +1,11 @@
 # Sistem Manajemen Perpustakaan
-
 ## Struktur Data
-
 * Doubly Linked List
 * Queue
-
 ---
-
 ## Fitur Program
-
 ### 1. Tambah Buku
-
 **Input:**
-
 * ID Buku (string)
 * Judul (string)
 * Pengarang (string)
@@ -22,91 +15,41 @@
 * Ketersediaan (bool)
 
 ### 2. Hapus Buku
-
 **Input:**
-
 * ID Buku
 
 ### 3. Cari Buku
-
 **Pencarian berdasarkan:**
-
 * ID Buku
 * Judul
 * Kategori
 * Pengarang
 
 ### 4. Tampilkan Buku
-
 **Fitur:**
-
 * Menampilkan seluruh daftar buku
 * Sorting berdasarkan judul (Ascending/Descending)
 * Filter berdasarkan status:
-
   * Tersedia
   * Tidak tersedia
 
 ### 5. Pinjam Buku
-
 **Input:**
-
 * ID Buku
 * Nama Peminjam
 * NIM
 * Tanggal Pinjam
 
 ### 6. Kembalikan Buku
-
 **Input:**
-
 * ID Buku
 
 ### 7. Lihat Daftar Tunggu
-
 **Menampilkan:**
-
 * ID Buku
 * Judul Buku
 * Nama Peminjam
 * Sisa waktu peminjaman (berapa hari lagi jatuh tempo)
 
 ### 8. Keluar
-
 ---
-
-## Pembagian Tugas
-
-### Jani
-
-* Struct `Buku`
-* Node Doubly Linked List
-* Tambah Buku
-
-### Tinna
-
-* Hapus Buku
-* Cari Buku
-
-### Jelli
-
-* Tampilkan Buku
-* Sorting (Ascending/Descending)
-* Filter Ketersediaan
-
-### Aul
-
-* Queue
-* Pinjam Buku
-* Kembalikan Buku
-* Lihat Daftar Tunggu
-
----
-
-## Tugas Bersama
-
-* Menggabungkan seluruh kode program
-* Membuat menu utama
-* Melakukan pengujian program
-* Menyusun laporan
-* Menyiapkan presentasi
