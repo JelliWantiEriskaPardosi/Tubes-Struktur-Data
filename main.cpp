@@ -1,8 +1,25 @@
-#include <stdio.h> // Digunakan untuk fungsi input dan output seperti printf() untuk menampilkan data dan scanf() untuk menerima input dari pengguna
-#include <stdlib.h> // Digunakan untuk pengelolaan memori secara dinamis, yaitu membuat node baru dengan malloc() dan menghapus node dengan free()
-#include <string.h> // Digunakan untuk operasi pada string seperti menyalin string menggunakan strcpy() dan membandingkan string menggunakan strcmp()
-#include <time.h> // Digunakan untuk mengakses tanggal dan waktu seperti menghitung lama peminjaman atau sisa waktu sebelum buku harus dikembalikan
+#include <stdio.h> //untuk fungsi input dan output seperti printf() untuk menampilkan data dan scanf() untuk menerima input dari pengguna
+#include <stdlib.h> //untuk pengelolaan memori secara dinamis, yaitu membuat node baru dengan malloc() dan menghapus node dengan free()
+#include <string.h> //untuk operasi pada string seperti menyalin string menggunakan strcpy() dan membandingkan string menggunakan strcmp()
+#include <time.h> //untuk mengakses tanggal dan waktu seperti menghitung lama peminjaman atau sisa waktu sebelum buku harus dikembalikan
 // STRUKTUR DATA & MENAMBAH BUKU --> AJAANIE MAFAZA SAHILAH
+typedef struct Buku{
+    char id[20];
+    char judul[100];
+    char pengarang[100];
+    int tahunTerbit;
+    char kategori[50];
+    char penerbit[100];
+    int tersedia;
+} Buku;
+
+typedef struct NodeBuku{
+    Buku data;
+    struct NodeBuku *prev;
+    struct NodeBuku *next;
+} NodeBuku;
+
+
 typedef struct DataAntrian{
     char idBuku[20];
     char judul[100];
@@ -29,6 +46,7 @@ typedef struct{
 // HAPUS & MENCARI BUKU --> CHRISTINNA BATA
 
 // MENAMPILKAN BUKU & SORTING --> JELLI WANTI ERISKA PARDOSI
+
 
 // QUEUE, PEMINJAMAN, & PENGEMBALIAN --> FITRI AULIA
 // Membuat queue kosong 
