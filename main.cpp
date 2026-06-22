@@ -1,4 +1,4 @@
-#include <stdio.h> //untuk fungsi input dan output seperti printf() untuk menampilkan data dan scanf() untuk menerima input dari pengguna
+#include <iostream> //untuk fungsi input dan output seperti printf() untuk menampilkan data dan scanf() untuk menerima input dari pengguna
 #include <stdlib.h> //untuk pengelolaan memori secara dinamis, yaitu membuat node baru dengan malloc() dan menghapus node dengan free()
 #include <string.h> //untuk operasi pada string seperti menyalin string menggunakan strcpy() dan membandingkan string menggunakan strcmp()
 #include <time.h> //untuk mengakses tanggal dan waktu seperti menghitung lama peminjaman atau sisa waktu sebelum buku harus dikembalikan
@@ -35,10 +35,7 @@ typedef struct DataAntrian{
 typedef struct NodeQueue{
     DataAntrian data;
     struct NodeQueue *next;
-}NodeQueue;
-// Queue
-// first --> elemen paling depan
-// last --> elemen paling belakang 
+}NodeQueue; 
 typedef struct{
     NodeQueue *first;
     NodeQueue *last;
@@ -46,7 +43,58 @@ typedef struct{
 // HAPUS & MENCARI BUKU --> CHRISTINNA BATA
 
 // MENAMPILKAN BUKU & SORTING --> JELLI WANTI ERISKA PARDOSI
+// sorting  buku berdasarkan judul dari A-Z
+// Mengurutkan buku berdasarkan judul dari A-Z
+void sortingJudulAZ(){
 
+    // Jika data buku kosong
+    if(head == NULL){
+        return;
+    }
+
+    Node *i, *j;
+
+    // Membandingkan setiap judul buku
+    for(i = head; i != NULL; i = i->next){
+
+        for(j = i->next; j != NULL; j = j->next){
+
+            // Jika judul pada node i lebih besar
+            if(i->data.judul > j->data.judul){
+
+                // Tukar data buku
+                Buku temp = i->data;
+                i->data = j->data;
+                j->data = temp;
+            }
+        }
+    }
+}
+
+// Mengurutkan buku berdasarkan status ketersediaan
+void sortingStatus(){
+
+    // Jika data buku kosong
+    if(head == NULL){
+        return;
+    }
+
+    Node *i, *j;
+
+    for(i = head; i != NULL; i = i->next){
+
+        for(j = i->next; j != NULL; j = j->next){
+
+            // Buku tersedia ditempatkan di atas
+            if(i->data.tersedia < j->data.tersedia){
+
+                Buku temp = i->data;
+                i->data = j->data;
+                j->data = temp;
+            }
+        }
+    }
+}
 
 // QUEUE, PEMINJAMAN, & PENGEMBALIAN --> FITRI AULIA
 // Membuat queue kosong 
