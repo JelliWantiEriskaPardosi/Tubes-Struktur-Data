@@ -44,7 +44,6 @@ typedef struct{
 
 // MENAMPILKAN BUKU & SORTING --> JELLI WANTI ERISKA PARDOSI
 // sorting  buku berdasarkan judul dari A-Z
-// Mengurutkan buku berdasarkan judul dari A-Z
 void sortingJudulAZ(){
 
     // Jika data buku kosong
