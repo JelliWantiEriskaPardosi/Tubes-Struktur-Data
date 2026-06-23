@@ -1,7 +1,8 @@
-#include <iostream> //untuk fungsi input dan output seperti printf() untuk menampilkan data dan scanf() untuk menerima input dari pengguna
+#include <iostream> //untuk fungsi input dan output seperti cout << untuk menampilkan data dan cin >> untuk menerima input dari pengguna
 #include <stdlib.h> //untuk pengelolaan memori secara dinamis, yaitu membuat node baru dengan malloc() dan menghapus node dengan free()
 #include <string.h> //untuk operasi pada string seperti menyalin string menggunakan strcpy() dan membandingkan string menggunakan strcmp()
 #include <time.h> //untuk mengakses tanggal dan waktu seperti menghitung lama peminjaman atau sisa waktu sebelum buku harus dikembalikan
+using namespace std;
 // STRUKTUR DATA & MENAMBAH BUKU --> AJAANIE MAFAZA SAHILAH
 typedef struct Buku{
     char id[20];
@@ -42,7 +43,6 @@ typedef struct{
     NodeQueue *first;
     NodeQueue *last;
 }Queue; 
-
 // Prototype Fungsi
 // Sorting Buku
 void sortingJudulAZ();
@@ -62,21 +62,21 @@ void hitungSisaPeminjaman(DataAntrian data);
 
 // HAPUS & MENCARI BUKU --> CHRISTINNA BATA
 
-// MENAMPILKAN BUKU & SORTING --> JELLI WANTI ERISKA PARDOSI
+// MENAMPILKAN BUKU & SORTING -- JELLI PARDOSI
 // sorting  buku berdasarkan judul dari A-Z
 void sortingJudulAZ(){
 
-    // Jika data buku kosong
-    if(head == NULL){
+    if(head == NULL){ // Jika data buku kosong
         return;
     }
-
-    Node *i, *j;
+   //pointer untuk membantu proses perbandigan 
+    Node *i, *j; //i untuk di periksa, j = pembannding 
+    
 
     // Membandingkan setiap judul buku
     for(i = head; i != NULL; i = i->next){
 
-        for(j = i->next; j != NULL; j = j->next){
+        for(j = i->next; j != NULL; j = j->next){ //pointer j selalu dimulai dari i
 
             // Jika judul pada node i lebih besar
             if(i->data.judul > j->data.judul){
@@ -114,6 +114,61 @@ void sortingStatus(){
         }
     }
 }
+// Menampilkan seluruh data buku
+void tampilkanBuku(){
+
+    if(head == NULL){
+        cout << "\nBelum ada data buku.\n";
+        return;
+    }
+
+    Node *current = head; //Membuat pointer bantu bernama current untuk berjalan dari node pertama ke node terakhir.
+
+    cout << "\n====================================================================================================\n";
+    cout << "ID\tJudul\t\tPengarang\tKategori\tStatus\n";
+    cout << "====================================================================================================\n";
+
+    while(current != NULL){  //buku akan ditampilkan selama current belum null
+
+        cout << current->data.id << "\t"
+             << current->data.judul << "\t\t"
+             << current->data.pengarang << "\t\t"
+             << current->data.kategori << "\t\t"
+             << (current->data.tersedia ? "Tersedia" : "tidak tersedia")
+             << endl;
+
+        current = current->next;
+    }
+}
+
+// Menu menampilkan buku
+void menuTampilkanBuku(){
+
+    int pilihan;
+
+    cout << "\n===== TAMPILKAN BUKU =====\n";
+    cout << "1. Urut Berdasarkan Judul (A-Z)\n";
+    cout << "2. Urut Berdasarkan Status Ketersediaan\n";
+    cout << "Pilihan : ";
+    cin >> pilihan;
+
+    switch(pilihan){
+
+        case 1: //jika user memilih sorting berdasarkan abjad
+            sortingJudulAZ();
+            tampilkanBuku();
+            break;
+
+        case 2: //jika user mimilih sorting berdasarkan status 
+            sortingStatus();
+            tampilkanBuku();
+            break;
+
+        default:
+            cout << "Pilihan tidak valid.\n";
+    }
+}
+
 
 // QUEUE, PEMINJAMAN, & PENGEMBALIAN --> FITRI AULIA
 // Membuat queue kosong 
@@ -156,7 +211,7 @@ void enqueue(Queue *Q, DataAntrian dataBaru) {
         // Last dipindahkan ke node baru
         Q->last = baru; 
     }
-    printf("\nPeminjam berhasil masuk ke daftar tunggu.\n");
+    cout << "\nPeminjam berhasil masuk ke daftar tunggu.\n";
 }
 
 // Menghapus peminjam paling depan 
@@ -188,33 +243,33 @@ void dequeue(Queue *Q){
 void pinjamBuku(Queue *Q){
     // Membuat variabel sementara untuk menyimpan data input
     DataAntrian data;
-   printf("\n========================================================\n");
-   printf("                    PINJAM BUKU\n");
-   printf("========================================================\n");;
+    cout << "\n========================================================\n";
+    cout << "                    PINJAM BUKU\n";
+    cout << "========================================================\n";
     // Meminta pengguna memasukkan data peminjaman
-    printf("ID Buku                             : ");
-    scanf("%s", data.idBuku);
+    cout << "ID Buku                             : ";
+    cin >> "%s", data.idBuku;
 
-    printf("Judul Buku                          : ");
-    scanf(" %[^\n]", data.judul);
+    cout << "Judul Buku                          : ";
+    cin >> " %[^\n]", data.judul;
 
-    printf("Nama Peminjam                       : ");
-    scanf(" %[^\n]", data.namaPeminjam);
+    cout << "Nama Peminjam                       : ";
+    cin >> " %[^\n]", data.namaPeminjam;
 
-    printf("NIM                                 : ");
-    scanf("%s", data.nim);
+    cout << "NIM                                 : ";
+    cin >> "%s", data.nim;
 
-    printf("Hari                                : ");
-    scanf(" %[^\n]", data.hari);
+    cout << "Hari                                : ";
+    cin >> " %[^\n]", data.hari;
 
-    printf("Tanggal                             :");
-    scanf("%d", &data.tanggal);
+    cout << "Tanggal                             :";
+    cin >> "%d", &data.tanggal;
 
-    printf("Bulan                               : ");
-    scanf("%d", &data.bulan);
+    cout << "Bulan                               :";
+    cin >> "%d", &data.bulan;
 
-    printf("Tahun                               : ");
-    scanf("%d", &data.tahun);
+    cout << "Tahun                               :";
+    cin >> "%d", &data.tahun;
 
     // Memasukkan data peminjam ke queue
     enqueue(Q, data);
@@ -224,23 +279,23 @@ void pinjamBuku(Queue *Q){
 void kembalikanBuku(Queue *Q){
     // Mengecek apakah queue masih kosong
     if(isEmpty(*Q)){
-        printf("\nDaftar tunggu kosong.\n");
+        cout("\nDaftar tunggu kosong.\n");
         return;
     }
 
-    printf("\n=======================================================\n");
-    printf("                    PENGEMBALIAN BUKU\n");
-    printf("==========================================================\n");
+    cout << "\n=======================================================\n";
+    cout << "                    PENGEMBALIAN BUKU\n";
+    cout << "==========================================================\n"; 
 
     // Menampilkan data peminjam yang mengembalikan buku
-    printf("ID Buku             : %s\n",Q->first->data.idBuku);
-    printf("Judul Buku          : %s\n",Q->first->data.judul);
-    printf("Nama Peminjam       : %s\n",Q->first->data.namaPeminjam);
-    printf("NIM                 : %s\n",Q->first->data.nim);
+    cout << "ID Buku             : %s\n",Q->first->data.idBuku;
+    cout << "Judul Buku          : %s\n",Q->first->data.judul;
+    cout << "Nama Peminjam       : %s\n",Q->first->data.namaPeminjam;
+    cout << "NIM                 : %s\n",Q->first->data.nim;
 
     // Menghapus data peminjam dari queue
     dequeue(Q);
-    printf("\nBuku berhasil dikembalikan.\n");
+    cout << "\nBuku berhasil dikembalikan.\n";
 }
 // Fungsi untuk menampilkan seluruh isi queue
 // Data ditampilkan dalam bentuk tabel
@@ -251,17 +306,17 @@ void tampilDaftarTunggu(Queue Q){
     int no = 1;
     // Mengecek apakah queue kosong 
     if(isEmpty(Q)){
-        printf("\nDaftar tunggu kosong.\n");
+        cout("\nDaftar tunggu kosong.\n");
         return;
     }
     // Pointer bantu dimulai dari elemen pertama
     bantu = Q.first;
-    printf("\n=============================================================================================================\n");
-    printf("| No | ID Buku | Judul Buku        | Nama Peminjam         | NIM     | Hari  | Tanggal | Bulan | Tahun |\n");
-    printf("=============================================================================================================\n");
+    cout << "\n=============================================================================================================\n";
+    cout << "| No | ID Buku | Judul Buku        | Nama Peminjam         | NIM     | Hari  | Tanggal | Bulan | Tahun |\n";
+    cout << "=============================================================================================================\n";
     // Menampilkan seluruh isi queue
     while(bantu != NULL){
-        printf("| %-2d | %-7s | %-25s | %-21s | %-10s | %-8s | %-7d | %-5d | %-5d |\n", 
+        cout("| %-2d | %-7s | %-25s | %-21s | %-10s | %-8s | %-7d | %-5d | %-5d |\n", 
                 no,
                 bantu->data.idBuku,
                 bantu->data.judul,
@@ -277,22 +332,22 @@ void tampilDaftarTunggu(Queue Q){
         no++;
     }
 
-    printf("=============================================================================================================\n");
-    printf("\n");
-    printf("========================================================\n");
-    printf("            SISA WAKTU PEMINJAMAN\n");
-    printf("========================================================\n");
+    cout << "=============================================================================================================\n";
+    cout << "\n");
+    cout << "========================================================\n";
+    cout << "            SISA WAKTU PEMINJAMAN\n");
+    cout << "========================================================\n";
 
     // Pointer bantu di-reset ke awal queue
     bantu = Q.first;
     // Menelusuri ulang seluruh data untuk menampilkan detail sisa waktu
     while(bantu != NULL){
-        printf("\nNama Peminjam : %s\n", bantu->data.namaPeminjam);
-        printf("Judul Buku      : %s\n", bantu->data.judul);
+        cout << "\nNama Peminjam : %s\n", bantu->data.namaPeminjam;
+        cout << "Judul Buku      : %s\n", bantu->data.judul;
     // Memanggil fungsi untuk menghitung sisa waktu peminjaman
     hitungSisaPeminjaman(bantu->data);
 
-    printf("---------------------------------------------------------\n");
+    cout("---------------------------------------------------------\n");
     bantu = bantu->next;
     }
 }
@@ -324,7 +379,7 @@ void hitungSisaPeminjaman(DataAntrian data){
     time_t waktuPinjam = mktime(&tanggalPinjam);
     // Jika mktime mengembalikan nilai -1, berarti input tanggal dari user tidak valid
     if(waktuPinjam == -1) {
-        printf("Gagal memproses tanggal peminjaman.\n");
+        cout << "Gagal memproses tanggal peminjaman.\n";
         return;
     }
 
@@ -342,12 +397,12 @@ void hitungSisaPeminjaman(DataAntrian data){
     // Jika selisih hari di atas 0, berarti tanggal sekarang belum melewati batas deadline (belum jatuh tempo)
     if(selisihHari > 0){
         // %.0f digunakan untuk membulatkan bilangan desimal ke integer terdekat
-        printf("Sisa Waktu Peminjaman : %.0f hari lagi\n", selisihHari);
+        cout << "Sisa Waktu Peminjaman : %.0f hari lagi\n", selisihHari;
     }
     // Jika selisih hari bernilai 0 atau negatif, berarti peminjam sudah telat mengembalikan buku
     else{
         // // Variabel selisihHari diubah menjadi positif dengan tanda minus (-) di depannya agar jumlah hari terlambat tidak tertulis minus
-        printf("Status Peminjaman      : Terlambat %.0f hari\n", -selisihHari);
+        cout << "Status Peminjaman      : Terlambat %.0f hari\n", -selisihHari;
     }
 }
 // Program Utama
@@ -359,18 +414,18 @@ int main(){
     // Variabel pilihan menu
     int pilihan;
     do{
-        printf("\n========================================================\n");
-        printf("           SISTEM MANAJEMEN PERPUSTAKAAN\n");
-        printf("========================================================\n");
-        printf("| 1 | Pinjam Buku                                    |\n");
-        printf("| 2 | Kembalikan Buku                                |\n");
-        printf("| 3 | Lihat Daftar Tunggu                            |\n");
-        printf("| 4 | Keluar                                         |\n");
-        printf("========================================================\n");
+        cout << "\n========================================================\n";
+        cout << "           SISTEM MANAJEMEN PERPUSTAKAAN\n");
+        cout << "========================================================\n";
+        cout << "| 1 | Pinjam Buku                                    |\n";
+        cout << "| 2 | Kembalikan Buku                                |\n";
+        cout << "| 3 | Lihat Daftar Tunggu                            |\n";
+        cout << "| 4 | Keluar                                         |\n";
+        cout << "========================================================\n";
 
         // Meminta pengguna memilih menu
-        printf("Masukkan Pilihan : ");
-        scanf("%d",&pilihan);
+        cout("Masukkan Pilihan : ");
+        cin("%d",&pilihan);
 
         switch(pilihan){
 
@@ -387,30 +442,30 @@ int main(){
             // Menu melihat daftar tunggu
             case 3:
             if (!isEmpty(daftarTunggu)){
-                printf("========================================================\n");
-                printf("            SISA WAKTU PEMINJAMAN\n");
-                printf("========================================================\n");
+                cout << "========================================================\n";
+                cout << "            SISA WAKTU PEMINJAMAN\n";
+                cout << "========================================================\n";
                 
                 // Mengambil data dari antrian paling depan (first)
                 DataAntrian dataDepan = daftarTunggu.first->data;
                 // Memanggil fungsi
                 hitungSisaPeminjaman(dataDepan);
-                printf("=========================================================\n");
+                cout << "=========================================================\n";
             }
             tampilDaftarTunggu(daftarTunggu);
             break;
             // Keluar dari program 
             case 4:
-                 printf("\n=====================================================\n");
-                 printf(" Terima kasih telah menggunakan\n");
-                 printf(" Sistem Manajemen Perpustakaan.\n");
-                 printf(" Program selesai.\n");
-                 printf("=====================================================\n");
+                 cout << "\n=====================================================\n";
+                 cout << "Terima kasih telah menggunakan\n";
+                 cout << "Sistem Manajemen Perpustakaan.\n";
+                 cout << "Program selesai.\n";
+                 cout << "=====================================================\n";
                  break; 
 
             // Jika pilihan tidak tersedia
             default:
-                printf("\nPilihan tidak tersedia!\n");
+                cout << "\nPilihan tidak tersedia!\n";
         }
     }while(pilihan != 4);
 }
