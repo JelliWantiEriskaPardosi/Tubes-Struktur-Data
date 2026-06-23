@@ -36,8 +36,7 @@ void tambahBuku();
 
 // FUNGSI MEMBUAT NODE BARU
 NodeBuku* buatNode(Buku dataBaru){
-    NodeBuku *baru;
-    baru = (NodeBuku*) malloc(sizof(NodeBuku));
+    NodeBuku *baru = new NodeBuku;
     baru->data = dataBaru;
     baru->prev = NULL;
     baru->next = NULL;
