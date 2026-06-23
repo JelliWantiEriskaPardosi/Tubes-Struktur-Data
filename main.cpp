@@ -3,7 +3,10 @@
 #include <string.h> //untuk operasi pada string seperti menyalin string menggunakan strcpy() dan membandingkan string menggunakan strcmp()
 #include <time.h> //untuk mengakses tanggal dan waktu seperti menghitung lama peminjaman atau sisa waktu sebelum buku harus dikembalikan
 using namespace std;
-// STRUKTUR DATA & MENAMBAH BUKU --> AJAANIE MAFAZA SAHILAH
+
+// STRUKTUR DATA & MENAMBAH BUKU --> ANJAANIE MAFAZA SAHILAH
+// STRUCT BUKU
+// Menyimpan seluruh informasi buku
 typedef struct Buku{
     char id[20];
     char judul[100];
@@ -11,14 +14,96 @@ typedef struct Buku{
     int tahunTerbit;
     char kategori[50];
     char penerbit[100];
-    int tersedia;
+    int tersedia; // 1 = tersedia, 0 = tidak tersedia
 } Buku;
 
+// NODE DOUBLY LINKED LIST
+// Setiap node menyimpan satu data buku serta pointer ke node sebelumnya dan berikutnya
 typedef struct NodeBuku{
     Buku data;
     struct NodeBuku *prev;
     struct NodeBuku *next;
 } NodeBuku;
+
+// POINTER HEAD DAN TAIL
+// head = node pertama, tail = node terakhir
+NodeBuku *head = NULL;
+NodeBuku *tail = NULL;
+
+// PROTOTYPE FUNGSI
+NodeBuku* buatNode(Buku dataBaru);
+void tambahBuku();
+
+// FUNGSI MEMBUAT NODE BARU
+NodeBuku* buatNode(Buku dataBaru){
+    NodeBuku *baru;
+    baru = (NodeBuku*) malloc(sizof(NodeBuku));
+    baru->data = dataBaru;
+    baru->prev = NULL;
+    baru->next = NULL;
+    return baru;
+}
+
+// FITUR TAMBAH BUKU
+// Menambahkan buku ke akhir Doubly Linked List
+void tambahBuku(){
+    Buku bukuBaru;
+
+    cout << "\n======================\n";
+    cout << "     TAMBAH BUKU\n";
+    cout << "========================\n";
+
+    cin.ignore();
+
+    // Input ID Buku
+    cout << "ID Buku                : ";
+    cin.getline(bukuBaru.id,20);
+
+    // Input Judul Buku
+    cout << "Judul Buku             : ";
+    cin.getline(bukuBaru.judul,100);
+
+    // Input Pengarang
+    cout << "Pengarang              : ";
+    cin.getline(bukuBaru.pengarang,100);
+
+    // Input Tahun Terbit
+    cout << "Tahun Terbit           : ";
+    cin >> bukuBaru.tahunTerbit;
+
+    cin.ignore();
+
+    // Input Kategori
+    cout << "Kategori               : ";
+    cin.getline(bukuBaru.kategori,50);
+
+    // Input Nama Penerbit
+    cout << "Nama Penerbit          : ";
+    cin.getline(bukuBaru.penerbit,100);
+
+    // Input Status Ketersediaan
+    cout << "Ketersediaan (1/0)     : ";
+    cin >> bukuBaru.tersedia;
+
+    // Membuat node baru
+    NodeBuku *baru = buatNode(bukuBaru);
+
+    // Jika linked list masih kosong
+    if(head == NULL){
+        head = baru;
+        tail = baru;
+    }
+
+    // Jika sudah ada data
+    else{
+        tail->next = baru;
+        baru->prev = tail;
+        tail = baru;
+    }
+
+    cout << "\nBuku berhasil ditambahkan.\n";
+}
+
 
 typedef struct DataAntrian{
     char idBuku[20]; // ID buku yang dipinjam 
