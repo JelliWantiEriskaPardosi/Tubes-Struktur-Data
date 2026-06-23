@@ -2,6 +2,7 @@
 #include <stdlib.h> //untuk pengelolaan memori secara dinamis, yaitu membuat node baru dengan malloc() dan menghapus node dengan free()
 #include <string.h> //untuk operasi pada string seperti menyalin string menggunakan strcpy() dan membandingkan string menggunakan strcmp()
 #include <time.h> //untuk mengakses tanggal dan waktu seperti menghitung lama peminjaman atau sisa waktu sebelum buku harus dikembalikan
+using namespace std;
 // STRUKTUR DATA & MENAMBAH BUKU --> AJAANIE MAFAZA SAHILAH
 typedef struct Buku{
     char id[20];
@@ -40,23 +41,24 @@ typedef struct{
     NodeQueue *first;
     NodeQueue *last;
 }Queue; 
+
 // HAPUS & MENCARI BUKU --> CHRISTINNA BATA
 
-// MENAMPILKAN BUKU & SORTING --> JELLI WANTI ERISKA PARDOSI
+// MENAMPILKAN BUKU & SORTING -- JELLI PARDOSI
 // sorting  buku berdasarkan judul dari A-Z
 void sortingJudulAZ(){
 
-    // Jika data buku kosong
-    if(head == NULL){
+    if(head == NULL){ // Jika data buku kosong
         return;
     }
-
-    Node *i, *j;
+   //pointer untuk membantu proses perbandigan 
+    Node *i, *j; //i untuk di periksa, j = pembannding 
+    
 
     // Membandingkan setiap judul buku
     for(i = head; i != NULL; i = i->next){
 
-        for(j = i->next; j != NULL; j = j->next){
+        for(j = i->next; j != NULL; j = j->next){ //pointer j selalu dimulai dari i
 
             // Jika judul pada node i lebih besar
             if(i->data.judul > j->data.judul){
@@ -94,6 +96,61 @@ void sortingStatus(){
         }
     }
 }
+// Menampilkan seluruh data buku
+void tampilkanBuku(){
+
+    if(head == NULL){
+        cout << "\nBelum ada data buku.\n";
+        return;
+    }
+
+    Node *current = head; //Membuat pointer bantu bernama current untuk berjalan dari node pertama ke node terakhir.
+
+    cout << "\n====================================================================================================\n";
+    cout << "ID\tJudul\t\tPengarang\tKategori\tStatus\n";
+    cout << "====================================================================================================\n";
+
+    while(current != NULL){  //buku akan ditampilkan selama current belum null
+
+        cout << current->data.id << "\t"
+             << current->data.judul << "\t\t"
+             << current->data.pengarang << "\t\t"
+             << current->data.kategori << "\t\t"
+             << (current->data.tersedia ? "Tersedia" : "tidak tersedia")
+             << endl;
+
+        current = current->next;
+    }
+}
+
+// Menu menampilkan buku
+void menuTampilkanBuku(){
+
+    int pilihan;
+
+    cout << "\n===== TAMPILKAN BUKU =====\n";
+    cout << "1. Urut Berdasarkan Judul (A-Z)\n";
+    cout << "2. Urut Berdasarkan Status Ketersediaan\n";
+    cout << "Pilihan : ";
+    cin >> pilihan;
+
+    switch(pilihan){
+
+        case 1: //jika user memilih sorting berdasarkan abjad
+            sortingJudulAZ();
+            tampilkanBuku();
+            break;
+
+        case 2: //jika user mimilih sorting berdasarkan status 
+            sortingStatus();
+            tampilkanBuku();
+            break;
+
+        default:
+            cout << "Pilihan tidak valid.\n";
+    }
+}
+
 
 // QUEUE, PEMINJAMAN, & PENGEMBALIAN --> FITRI AULIA
 // Membuat queue kosong 
