@@ -19,27 +19,47 @@ typedef struct NodeBuku{
     struct NodeBuku *next;
 } NodeBuku;
 
-
 typedef struct DataAntrian{
-    char idBuku[20];
-    char judul[100];
-    char namaPeminjam[100];
-    char nim[20];
-     char hari[20];
+    char idBuku[20]; // ID buku yang dipinjam 
+    char judul[100]; // Judul buku
+    char namaPeminjam[100]; // Nama Peminjam
+    char nim[20]; // Nim Peminjam
+    char hari[20]; // Hari peminjam (Senin, Selasa, Rabu, Kamis, Jum'at)
 
-    // Tanggal saat melakukan peminjaman 
-    int bulan;
-    int tahun;
+    // Tanggal peminjaman buku
+    // Digunakan untuk menghitung sisa waktu peminjaman
+    int tanggal;   // Tanggal peminjaman
+    int bulan;    // Bulan peminjaman
+    int tahun;    // Tahun peminjaman
 }DataAntrian;
+
 // Node Queue untuk setiap node menyimpan satu data peminjam serta pointer menuju node berikutnya
 typedef struct NodeQueue{
-    DataAntrian data;
+    DataAntrian data; 
     struct NodeQueue *next;
 }NodeQueue; 
 typedef struct{
     NodeQueue *first;
     NodeQueue *last;
 }Queue; 
+
+// Prototype Fungsi
+// Sorting Buku
+void sortingJudulAZ();
+void sortingStatus();
+// Queue
+void createQueue(Queue *Q);
+int isEmpty(Queue Q);
+void enqueue(Queue *Q, DataAntrian dataBaru);
+void dequeue(Queue *Q);
+// Peminjaman dan Pengembalian
+void pinjamBuku(Queue *Q);
+void kembalikanBuku(Queue *Q);
+// Tampilan 
+void tampilDaftarTunggu(Queue Q);
+// Perhitungan waktu peminjaman
+void hitungSisaPeminjaman(DataAntrian data);
+
 // HAPUS & MENCARI BUKU --> CHRISTINNA BATA
 
 // MENAMPILKAN BUKU & SORTING --> JELLI WANTI ERISKA PARDOSI
@@ -112,6 +132,7 @@ int isEmpty(Queue Q){
     else
         return 0;
 }
+
 // Menambahkan peminjam ke daftar tunggu
 // Konsep FIFO
 // Orang yang masuk lebih dulu akan mendapatkan buku lebih dulu
@@ -137,6 +158,7 @@ void enqueue(Queue *Q, DataAntrian dataBaru) {
     }
     printf("\nPeminjam berhasil masuk ke daftar tunggu.\n");
 }
+
 // Menghapus peminjam paling depan 
 // Orang pertama dalam antrian akan keluar terlebih dahulu
 void dequeue(Queue *Q){
@@ -159,6 +181,7 @@ void dequeue(Queue *Q){
     // Menghapus node dari memori
     free(hapus);
 }
+
 // Fungsi untuk meminjam buku
 // Data peminjam akan dimasukkan ke dalam queue
 // Sesuai kosep FIFO (First In First Out)
@@ -183,6 +206,9 @@ void pinjamBuku(Queue *Q){
 
     printf("Hari                                : ");
     scanf(" %[^\n]", data.hari);
+
+    printf("Tanggal                             :");
+    scanf("%d", &data.tanggal);
 
     printf("Bulan                               : ");
     scanf("%d", &data.bulan);
@@ -231,17 +257,18 @@ void tampilDaftarTunggu(Queue Q){
     // Pointer bantu dimulai dari elemen pertama
     bantu = Q.first;
     printf("\n=============================================================================================================\n");
-    printf("| No | ID Buku | Judul Buku                | Nama Peminjam         | NIM        | Hari   | Bulan | Tahun |\n");
+    printf("| No | ID Buku | Judul Buku        | Nama Peminjam         | NIM     | Hari  | Tanggal | Bulan | Tahun |\n");
     printf("=============================================================================================================\n");
     // Menampilkan seluruh isi queue
     while(bantu != NULL){
-        printf("| %-2d | %-7s | %-25s | %-21s | %-10s | %-8s | %-5d | %-5d |\n", 
+        printf("| %-2d | %-7s | %-25s | %-21s | %-10s | %-8s | %-7d | %-5d | %-5d |\n", 
                 no,
                 bantu->data.idBuku,
                 bantu->data.judul,
                 bantu->data.namaPeminjam,
                 bantu->data.nim,
                 bantu->data.hari,
+                bantu->data.tanggal,
                 bantu->data.bulan,
                 bantu->data.tahun);
         // Berpisah ke node berikutnya
@@ -251,8 +278,78 @@ void tampilDaftarTunggu(Queue Q){
     }
 
     printf("=============================================================================================================\n");
-}
+    printf("\n");
+    printf("========================================================\n");
+    printf("            SISA WAKTU PEMINJAMAN\n");
+    printf("========================================================\n");
 
+    // Pointer bantu di-reset ke awal queue
+    bantu = Q.first;
+    // Menelusuri ulang seluruh data untuk menampilkan detail sisa waktu
+    while(bantu != NULL){
+        printf("\nNama Peminjam : %s\n", bantu->data.namaPeminjam);
+        printf("Judul Buku      : %s\n", bantu->data.judul);
+    // Memanggil fungsi untuk menghitung sisa waktu peminjaman
+    hitungSisaPeminjaman(bantu->data);
+
+    printf("---------------------------------------------------------\n");
+    bantu = bantu->next;
+    }
+}
+// Fungsi untuk menghitung sisa waktu peminjaman buku 
+// Ketentuan: 
+// 1. Masa peminjaman buku adalah 7 hari
+// 2. Program akan menghitung berapa hari lagi sebelum buku harus dikembalikan 
+// 3. Jika melewati batas waktu, program akan menampilkan jumlah hari keterlambatan
+void hitungSisaPeminjaman(DataAntrian data){
+    // Struktur untuk menyimpan tanggak peminjaman 
+    struct tm tanggalPinjam = {0};
+
+    // Mengatur detik, menit, dan jam ke pukul 12:00:00 (siang)
+    tanggalPinjam.tm_sec = 0;
+    tanggalPinjam.tm_min = 0;
+    tanggalPinjam.tm_hour = 12;
+    // Mengisi data tanggal peminjam dari input pengguna
+    tanggalPinjam.tm_mday = data.tanggal;
+    // Mengisi bulan peminjaman
+    // Pada struct tm, Januari = 0 dan Desember = 11
+    tanggalPinjam.tm_mon = data.bulan - 1;
+    // Mengisi tahun peminjaman 
+    //mengurangi 1900 karena baris perhitungan struct tm dimulai dari tahun 1900
+    tanggalPinjam.tm_year = data.tahun - 1900;
+    // Mengatur DST (Daylight Saving Time) ke -1 agar sistem operasi menentukan secara otomatis berdasarkan lokal waktu
+    tanggalPinjam.tm_isdst = -1;
+
+    // Mengubah ke format waktu sistem 
+    time_t waktuPinjam = mktime(&tanggalPinjam);
+    // Jika mktime mengembalikan nilai -1, berarti input tanggal dari user tidak valid
+    if(waktuPinjam == -1) {
+        printf("Gagal memproses tanggal peminjaman.\n");
+        return;
+    }
+
+    // Menentukan batas peminjaman selama 7 hari ke dalam detik (7 hari * 24 jam * 60 menit * 60 detik) untuk mendapatkan deadline
+    time_t batasPinjam = waktuPinjam + (7 * 24 * 60 * 60);
+
+    // Mengambil waktu real-time saat ini dari sistem komputer
+    time_t sekarang = time(NULL);
+
+    // Menghitung selisih dalam hari
+    // difftime() mencari selisih antara batas akhir pinjam dengan waktu saat ini (dalam satuan detik)
+    double selisihHari = difftime(batasPinjam, sekarang) / (60 * 60 * 24); 
+
+    // Menampilkan hasil perhitungan 
+    // Jika selisih hari di atas 0, berarti tanggal sekarang belum melewati batas deadline (belum jatuh tempo)
+    if(selisihHari > 0){
+        // %.0f digunakan untuk membulatkan bilangan desimal ke integer terdekat
+        printf("Sisa Waktu Peminjaman : %.0f hari lagi\n", selisihHari);
+    }
+    // Jika selisih hari bernilai 0 atau negatif, berarti peminjam sudah telat mengembalikan buku
+    else{
+        // // Variabel selisihHari diubah menjadi positif dengan tanda minus (-) di depannya agar jumlah hari terlambat tidak tertulis minus
+        printf("Status Peminjaman      : Terlambat %.0f hari\n", -selisihHari);
+    }
+}
 // Program Utama
 int main(){
     // Membuat queue daftar tunggu
@@ -289,9 +386,19 @@ int main(){
 
             // Menu melihat daftar tunggu
             case 3:
-                tampilDaftarTunggu(daftarTunggu);
-                break;
-            
+            if (!isEmpty(daftarTunggu)){
+                printf("========================================================\n");
+                printf("            SISA WAKTU PEMINJAMAN\n");
+                printf("========================================================\n");
+                
+                // Mengambil data dari antrian paling depan (first)
+                DataAntrian dataDepan = daftarTunggu.first->data;
+                // Memanggil fungsi
+                hitungSisaPeminjaman(dataDepan);
+                printf("=========================================================\n");
+            }
+            tampilDaftarTunggu(daftarTunggu);
+            break;
             // Keluar dari program 
             case 4:
                  printf("\n=====================================================\n");
@@ -303,7 +410,7 @@ int main(){
 
             // Jika pilihan tidak tersedia
             default:
-                printf("\nPilihan tidak valid!\n");
+                printf("\nPilihan tidak tersedia!\n");
         }
     }while(pilihan != 4);
 }
