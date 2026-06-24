@@ -146,7 +146,7 @@ void hitungSisaPeminjaman(DataAntrian data);
 
 // HAPUS & MENCARI BUKU --> CHRISTINNA BATA
 
-// MENAMPILKAN BUKU & SORTING -- JELLI PARDOSI
+// MENAMPILKAN BUKU & SORTING -- Jelli Wanti Eriska Pardosi
 // sorting  buku berdasarkan judul dari A-Z
 void sortingJudulAZ(){
 
@@ -208,9 +208,9 @@ void tampilkanBuku(){
 
     Node *current = head; //Membuat pointer bantu bernama current untuk berjalan dari node pertama ke node terakhir.
 
-    cout << "\n====================================================================================================\n";
+    cout << "\n============================================================================================\n";
     cout << "ID\tJudul\t\tPengarang\tKategori\tStatus\n";
-    cout << "====================================================================================================\n";
+    cout << "==============================================================================================\n";
 
     while(current != NULL){  //buku akan ditampilkan selama current belum null
 
