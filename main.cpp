@@ -103,7 +103,6 @@ void tambahBuku(){
     cout << "\nBuku berhasil ditambahkan.\n";
 }
 
-
 typedef struct DataAntrian{
     char idBuku[20]; // ID buku yang dipinjam 
     char judul[100]; // Judul buku
@@ -123,10 +122,12 @@ typedef struct NodeQueue{
     DataAntrian data; 
     struct NodeQueue *next;
 }NodeQueue; 
+
 typedef struct{
     NodeQueue *first;
     NodeQueue *last;
 }Queue; 
+
 // Prototype Fungsi
 // Sorting Buku
 void sortingJudulAZ();
@@ -145,7 +146,6 @@ void tampilDaftarTunggu(Queue Q);
 void hitungSisaPeminjaman(DataAntrian data);
 
 // HAPUS & MENCARI BUKU --> CHRISTINNA BATA
-
 // pencarian buku berdasarkan id buku
 void cariBuku(Queue Q) {
     if (isEmpty(Q)) {
@@ -350,7 +350,6 @@ void menuTampilkanBuku(){
             cout << "Pilihan tidak valid.\n";
     }
 }
-
 
 // QUEUE, PEMINJAMAN, & PENGEMBALIAN --> FITRI AULIA
 // Membuat queue kosong 
@@ -587,6 +586,7 @@ void hitungSisaPeminjaman(DataAntrian data){
         cout << "Status Peminjaman      : Terlambat %.0f hari\n", -selisihHari;
     }
 }
+
 // Program Utama
 int main(){
     // Membuat queue daftar tunggu
