@@ -28,6 +28,105 @@ typedef struct{
 }Queue; 
 // HAPUS & MENCARI BUKU --> CHRISTINNA BATA
 
+// pencarian data buku berdasarkan id buku
+void cariBuku(Queue Q) {
+    if (isEmpty(Q)) {
+        cout << "\nDaftar buku kosong.\n";
+        return;
+    }
+
+    char cariID[20];
+    cout << "=========================================";
+    cout << "             CARI BUKU BY ID             ";
+    cout << "=========================================";
+    cout << "Masukkan ID buku yang dicari: ";
+    cin >> cariID;
+    
+    NodeQueue *bantu = Q.first;
+    int ditemukan = 0;
+
+    //menelusuri seluruh daftar buku
+    while (bantu != NULL) {
+        // membandingkan ID yang dicari dengan ID di node saat ini
+        if (strcmp(bantu->data.id, cariID) == 0) {
+            ditemukan = 1;
+            cout << "\n== Buku ditemukan ==\n";
+            cout << "ID Buku    : " << bantu->data.idBuku << "\n";
+            cout << "Judul Buku : " << bantu->data.judul << "\n";
+            if (strlen(bantu->data.nim) == 0) {
+                cout << "Status     : Available\n";
+            } else {
+                cout << "Status     : Sedang dipinjam/antri oleh " << bantu->data.namaPeminjam << " (NIM: " << bantu->data.nim << ")\n";
+            }
+        }
+        bantu = bantu->next;
+    }
+
+    if (!ditemukan) {
+        cout << "\nBuku dengan ID tersebut tidak ditemukan di dalam sistem.\n";
+    }
+    cout << "===========================================================================\n";
+}
+
+// penghapusan data buku dari sistem berdasarkan id buku
+void delBuku(Queue *Q) {
+    if (isEmpty(*Q)) {
+        cout << "\nDaftar buku kosong.\n";
+        return;
+    }
+
+    char hapusID[20];
+    cout << "\n======================================";
+    cout << "            HAPUS BUKU BY ID            ";
+    cout << "======================================\n";
+    cout << "Masukkan ID buku yang ingin dihapus: ";
+    cin >> hapusID;
+
+    NodeQueue *bantu = Q->first;
+    NodeQueue *prev = NULL;
+    int ditemukan = 0;
+
+    while (bantu != NULL) {
+        if (strcmp(bantu->data.idBuku, hapusID) == 0) {
+            ditemukan = 1;
+
+            // jika buku berada di urutan pertama
+            if (bantu == Q->first) {
+                Q->first = Q->first->next;
+                if (Q->first == NULL) {
+                    Q->last = NULL;
+                }
+            }
+
+            // jika buku berada di urutan paling belakang
+            else if (bantu == Q->last) {
+                Q->last = prev;
+                Q->last->next = NULL;
+            }
+
+            // jika buku berada di tengah
+            else {
+                prev->next = bantu->next;
+            }
+
+            NodeQueue *hapus = bantu;
+            bantu = bantu->next;    // geser bantu ke simpul berikutnya
+            free(hapus);            // hapus node dari memori
+
+            cout << "\nBuku dengan ID " << hapusID << " berhasil dihapus dari sistem.\n";
+            break;
+        } else {
+            prev = bantu;
+            bantu = bantu->next;
+        }
+    }
+
+    if (!ditemukan) {
+        cout << "\nBuku dengan ID tersebut tidak ditemukan di dalam sistem.\n";
+    }
+    cout << "=================================================================";
+}
+
 // MENAMPILKAN BUKU & SORTING --> JELLI WANTI ERISKA PARDOSI
 
 // QUEUE, PEMINJAMAN, & PENGEMBALIAN --> FITRI AULIA
