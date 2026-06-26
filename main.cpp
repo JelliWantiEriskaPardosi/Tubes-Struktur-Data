@@ -1,7 +1,7 @@
-#include <iostream> //untuk fungsi input dan output seperti cout << untuk menampilkan data dan cin >> untuk menerima input dari pengguna
-#include <stdlib.h> //untuk pengelolaan memori secara dinamis, yaitu membuat node baru dengan malloc() dan menghapus node dengan free()
-#include <string.h> //untuk operasi pada string seperti menyalin string menggunakan strcpy() dan membandingkan string menggunakan strcmp()
-#include <time.h> //untuk mengakses tanggal dan waktu seperti menghitung lama peminjaman atau sisa waktu sebelum buku harus dikembalikan
+#include <iostream> //input dan output (cout, cin)
+#include <stdlib.h> //manajemen memori dinamis (malloc, free)
+#include <string.h> //operasi string (strcpy, strcmp)
+#include <time.h>   //fungsi waktu dan tanggal
 using namespace std;
 
 // STRUKTUR DATA & MENAMBAH BUKU --> ANJAANIE MAFAZA SAHILAH
