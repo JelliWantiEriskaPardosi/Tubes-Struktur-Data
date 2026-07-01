@@ -16,7 +16,6 @@ typedef struct Buku{
     int tersedia; // 1 = tersedia, 0 = tidak tersedia
 } Buku;
 
-// NODE DOUBLE LINKED LIST(tiap node menyimpan satu data buku & pointer ke node sebelumnya dan berikutnya
 typedef struct NodeBuku{
     Buku data;
     struct NodeBuku *prev;
@@ -40,8 +39,6 @@ typedef struct DataAntrian{
     int bulan;    // Bulan peminjaman
     int tahun;    // Tahun peminjaman
 }DataAntrian;
-
-// Node Queue untuk setiap node menyimpan satu data peminjam & pointer menuju node berikutnya
 typedef struct NodeQueue{
     DataAntrian data; 
     struct NodeQueue *next;
@@ -116,7 +113,6 @@ void tambahBuku(){
         baru->prev = tail;
         tail = baru;
     }
-
     cout << "\nBuku berhasil ditambahkan.\n";
 }
 
@@ -215,8 +211,9 @@ void delBuku() {
     }
 }
 
-// MENAMPILKAN BUKU & SORTING -- Jelli Wanti Eriska Pardosi
-void sortingJudulAZ(){      // sorting  buku berdasarkan judul dari A-Z
+// MENAMPILKAN BUKU & SORTING 
+// sorting  buku berdasarkan judul dari A-Z
+void sortingJudulAZ(){ 
 
     if(head == NULL){ // Jika data buku kosong
         return;
@@ -227,19 +224,19 @@ void sortingJudulAZ(){      // sorting  buku berdasarkan judul dari A-Z
     // Membandingkan setiap judul buku
     for(i = head; i != NULL; i = i->next){
 
-        for(j = i->next; j != NULL; j = j->next){ //pointer j selalu dimulai dari i
+        for(j = i->next; j != NULL; j = j->next){ 
             if(strcmp(i->data.judul, j->data.judul) > 0){
-
                 // Tukar data buku
                 Buku temp = i->data;
                 i->data = j->data;
                 j->data = temp;
             }
+
         }
     }
 }
 
-// Mengurutkan buku berdasarkan status ketersediaan
+// sorting buku berdasarkan status ketersediaan
 void sortingStatus(){
 
     // Jika data buku kosong
@@ -259,6 +256,7 @@ void sortingStatus(){
                 i->data = j->data;
                 j->data = temp;
             }
+
         }
     }
 }
@@ -291,7 +289,6 @@ void tampilkanBuku(){
 void menuTampilkanBuku(){
 
     int pilihan;
-
     cout << "\n===== TAMPILKAN BUKU =====\n";
     cout << "1. Urut Berdasarkan Judul (A-Z)\n";
     cout << "2. Urut Berdasarkan Status Ketersediaan\n";
